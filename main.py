@@ -153,7 +153,6 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
     try:
         while True:
             data = await websocket.receive_text()
-            request_data = json.loads(data)
             
             if not VECTOR_STORE_PATH.exists():
                 await websocket.send_text(json.dumps({
@@ -164,7 +163,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
             with open(VECTOR_STORE_PATH, 'rb') as f:
                 vector_store = pickle.load(f)
             
-            response = get_response(request_data["question"], vector_store)
+            response = get_response(data, vector_store)
             await websocket.send_text(json.dumps({
                 "response": response
             }))
