@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "main.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+        {
+            "src": "/ws/(?<client_id>.*)",
+            "dest": "app.py"
+          },
+          {
+            "src": "/.*",
+            "dest": "app.py"
+          }
+    ]
+  }
